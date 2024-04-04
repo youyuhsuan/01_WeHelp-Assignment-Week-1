@@ -222,7 +222,7 @@ header .navbar-items {
     z-index: 2;
     width: 50%;
     height: 100vh;
-    transform: translateX(100%);
+    translate: 100%;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
@@ -270,6 +270,12 @@ aside .navbar-item {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .banner h1 {
+    font-size: 20px;
+  }
 }
 
 body {
@@ -392,7 +398,7 @@ body {
 .hamburger-menu {
   display: none;
 }
-@media (max-width: 1200px) {
+@media (max-width: 600px) {
   .hamburger-menu {
     display: flex;
     flex-direction: column;
@@ -414,12 +420,12 @@ body {
   .hamburger-menu:has(input:checked)::before {
     rotate: 45deg;
     width: 4;
-    transform: translate(0 -2px);
+    translate: 0 -2px;
   }
   .hamburger-menu:has(input:checked)::after {
     rotate: -45deg;
     width: 4;
-    transform: translate(0 2px);
+    translate: 0 2px;
   }
   .hamburger-menu:has(input:checked) aside {
     transform: translate(0%);

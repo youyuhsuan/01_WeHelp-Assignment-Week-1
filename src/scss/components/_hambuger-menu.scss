@@ -4,7 +4,7 @@
 //input
 .hamburger-menu {
   display: none;
-  @include breakpoint(lg) {
+  @include breakpoint(md) {
     display: flex;
     flex-direction: column;
     gap: $hamburger-gutters;
@@ -28,12 +28,12 @@
       &::before {
         rotate: 45deg;
         width: $hamburger-x-width;
-        transform: translate(0 calc($bar-height/ -2));
+        translate: 0 calc($bar-height/ -2);
       }
       &::after {
         rotate: -45deg;
         width: $hamburger-x-width;
-        transform: translate(0 calc($bar-height / 2));
+        translate: 0 calc($bar-height / 2);
       }
       aside {
         transform: translate(0%);
