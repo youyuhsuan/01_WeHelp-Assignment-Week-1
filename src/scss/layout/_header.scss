@@ -7,9 +7,10 @@ header {
   justify-content: space-between;
   align-items: center;
   height: $title-height;
-  max-width: 1200px;
+  // max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+  padding: 0 $gutters;
   @include breakpoint(lg) {
     width: 90%;
   }
