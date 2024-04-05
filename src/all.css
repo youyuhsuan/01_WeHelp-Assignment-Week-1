@@ -379,7 +379,7 @@ body {
 .card .card-img img {
   width: 100%;
   height: auto;
-  object-fit: contain;
+  object-fit: cover;
 }
 .card .fa-solid {
   position: absolute;
