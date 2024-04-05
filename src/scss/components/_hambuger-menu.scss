@@ -35,12 +35,12 @@
         width: $hamburger-x-width;
         translate: 0 calc($bar-height / 2);
       }
-      aside {
-        transform: translate(0%);
+      .sidenav {
+        width: 50%;
       }
     }
     &:has(input:checked) + .navbar-items {
-      translate: 0%;
+      width: 50%;
     }
 
     input {
@@ -58,12 +58,15 @@
 
 // Button
 button {
+  position: relative;
+  z-index: 3;
   background: none;
   border: none;
   display: none;
-  @include breakpoint(sm) {
+  @include breakpoint(md) {
     display: block;
   }
+
   .fa-bars,
   .fa-xmark {
     display: none;
