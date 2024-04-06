@@ -3,86 +3,10 @@
 @use "sass:math";
 
 // DISPLAY:FLEX
-.card-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $gutters;
-}
-
-.card {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  height: $card-height;
-  position: relative;
-  &:nth-child(1),
-  &:nth-child(6) {
-    width: calc((100% - 2 * $gutters) / 3);
-  }
-  &:not(:nth-child(1), :nth-child(6)) {
-    width: calc((100% - 5 * $gutters) / 6);
-  }
-  @include breakpoint(lg) {
-    &:not(:nth-last-child(-n + 2)) {
-      width: calc((100% - $gutters * 3) / 4);
-    }
-    &:nth-last-child(-n + 2) {
-      width: calc((100% - $gutters) / 2);
-    }
-  }
-  @include breakpoint(md) {
-    &:not(:nth-last-child(-n + 2)) {
-      width: 100%;
-    }
-    &:nth-last-child(-n + 2) {
-      width: 100%;
-    }
-  }
-
-  .card-img {
-    overflow: clip;
-    img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-  }
-
-  .fa-solid {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 24px;
-    color: $secondary;
-  }
-
-  .card-title {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    bottom: 0;
-    width: 100%;
-    height: $title-height;
-    background-color: rgba($primary, 50%);
-  }
-}
-
-//GRID
 // .card-section {
-//   display: grid;
-//   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-//   grid-template-rows: 2fr;
+//   display: flex;
+//   flex-wrap: wrap;
 //   gap: $gutters;
-//   @include breakpoint(lg) {
-//     grid-template-columns: repeat(4, 1fr);
-//     grid-template-rows: 3fr;
-//   }
-//   @include breakpoint(md) {
-//     gap: 0;
-//     grid-template-columns: 1fr;
-//     grid-template-rows: auto;
-//   }
 // }
 
 // .card {
@@ -90,26 +14,37 @@
 //   flex-direction: row;
 //   position: relative;
 //   height: $card-height;
+//   position: relative;
+//   &:nth-child(1),
+//   &:nth-child(6) {
+//     width: calc((100% - 2 * $gutters) / 3);
+//   }
+//   &:not(:nth-child(1), :nth-child(6)) {
+//     width: calc((100% - 5 * $gutters) / 6);
+//   }
 //   @include breakpoint(lg) {
+//     &:not(:nth-last-child(-n + 2)) {
+//       width: calc((100% - $gutters * 3) / 4);
+//     }
 //     &:nth-last-child(-n + 2) {
-//       grid-column: span 2;
+//       width: calc((100% - $gutters) / 2);
 //     }
 //   }
 //   @include breakpoint(md) {
-//     &:not(:nth-last-child(1)) {
-//       margin-bottom: $gutters;
+//     &:not(:nth-last-child(-n + 2)) {
+//       width: 100%;
 //     }
 //     &:nth-last-child(-n + 2) {
-//       grid-column: 1;
+//       width: 100%;
 //     }
 //   }
 
 //   .card-img {
 //     overflow: clip;
-//     position: relative;
 //     img {
 //       width: 100%;
-//       object-fit: contain;
+//       height: auto;
+//       object-fit: cover;
 //     }
 //   }
 
@@ -132,3 +67,68 @@
 //     background-color: rgba($primary, 50%);
 //   }
 // }
+
+//GRID
+.card-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 2fr;
+  gap: $gutters;
+  @include breakpoint(lg) {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 3fr;
+  }
+  @include breakpoint(md) {
+    gap: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  height: $card-height;
+  @include breakpoint(lg) {
+    &:nth-last-child(-n + 2) {
+      grid-column: span 2;
+    }
+  }
+  @include breakpoint(md) {
+    &:not(:nth-last-child(1)) {
+      margin-bottom: $gutters;
+    }
+    &:nth-last-child(-n + 2) {
+      grid-column: 1;
+    }
+  }
+
+  .card-img {
+    overflow: clip;
+    position: relative;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .fa-solid {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 24px;
+    color: $secondary;
+  }
+
+  .card-title {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    width: 100%;
+    height: $title-height;
+    background-color: rgba($primary, 50%);
+  }
+}

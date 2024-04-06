@@ -334,9 +334,23 @@ body {
 }
 
 .card-section {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 2fr;
   gap: 20px;
+}
+@media (max-width: 1200px) {
+  .card-section {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 3fr;
+  }
+}
+@media (max-width: 600px) {
+  .card-section {
+    gap: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
 }
 
 .card {
@@ -344,37 +358,27 @@ body {
   flex-direction: row;
   position: relative;
   height: 200px;
-  position: relative;
-}
-.card:nth-child(1), .card:nth-child(6) {
-  width: calc((100% - 40px) / 3);
-}
-.card:not(:nth-child(1), :nth-child(6)) {
-  width: calc((100% - 100px) / 6);
 }
 @media (max-width: 1200px) {
-  .card:not(:nth-last-child(-n+2)) {
-    width: calc((100% - 60px) / 4);
-  }
   .card:nth-last-child(-n+2) {
-    width: calc((100% - 20px) / 2);
+    grid-column: span 2;
   }
 }
 @media (max-width: 600px) {
-  .card:not(:nth-last-child(-n+2)) {
-    width: 100%;
+  .card:not(:nth-last-child(1)) {
+    margin-bottom: 20px;
   }
   .card:nth-last-child(-n+2) {
-    width: 100%;
+    grid-column: 1;
   }
 }
 .card .card-img {
   overflow: clip;
+  position: relative;
 }
 .card .card-img img {
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  object-fit: contain;
 }
 .card .fa-solid {
   position: absolute;
