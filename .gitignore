@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # pdf
-.Assignment_-_Week_1.pdf
+*.pdf
