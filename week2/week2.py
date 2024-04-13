@@ -2,24 +2,25 @@
 def find_and_print(messages, current_station):
     SongshanXindian_Line = [
         "Songshan",
-        "Nanjing Sanmin",
+        "Nanjing Sanmin", 
         "Taipei Arena",
         "Nanjing Fuxing",
-        "Songjing Nanjing",
+        "Songjing Nanjing", 
         "Zhongshan",
-        "Beimen",
-        "Ximen",
-        "Xiaonanmen",
-        "Chiang Kai-Shek Memorial Hall",
+        "Beimen", 
+        "Ximen", 
+        "Xiaonanmen", 
+        "Chiang Kai-Shek Memorial Hall", 
         "Guting",
-        "Taipower Building",
+        "Taipower Building", 
         "Gongguan",
         "Wanlong",
         "Jingmei",
         "Dapinglin",
-        "Qizhang",
-        "Xindian City Hall",
-        "Xindian",
+        "Qizhang", 
+        "Xiaobitan",
+        "Xindian City Hall", 
+        "Xindian"
     ]
   
     current_position = SongshanXindian_Line.index(current_station)
@@ -32,15 +33,14 @@ def find_and_print(messages, current_station):
             if station in value:
                 SongshanXindian_Line_tempVaule=abs(line-current_position)
                 if station in value:
-                    SongshanXindian_Line_tempVaule=abs(current_position-line)
                     if current_station == "Xindian City Hall" and station == "Xindian":
-                        comparisonValue = SongshanXindian_Line_tempVaule
+                        comparisonValue = line
                         nearFriend = name
                         break
                     elif SongshanXindian_Line_tempVaule < comparisonValue:
                         comparisonValue = SongshanXindian_Line_tempVaule
                         nearFriend=name
-    return nearFriend
+    print(nearFriend) 
 
   
 messages={
@@ -109,15 +109,18 @@ book(consultants, 14, 3, "price")  # John
 # task3
 def func(*data):
     newData = []
+    check = True
     for name in data:
         length = len(name)
         newData.append(name[length // 2])
 
     for index, value in enumerate(newData):
         if newData.count(value) == 1:
-            return data[index]
-    else:
-        return "沒有"
+            print (data[index])
+            check = False
+            break
+    if(check):
+        print ("沒有")
 
 
 func("彭大牆", "陳王明雅", "吳明")  # print 彭大牆

@@ -1,14 +1,18 @@
 def func(*data):
     newData = []
+    check = True
     for name in data:
         length = len(name)
         newData.append(name[length // 2])
 
+
     for index, value in enumerate(newData):
         if newData.count(value) == 1:
-            return data[index]
-    else:
-        return "沒有"
+            print (data[index])
+            check = False
+            break
+    if(check):
+        print ("沒有")
 
 
 func("彭大牆", "陳王明雅", "吳明")  # print 彭大牆

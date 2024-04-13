@@ -1,6 +1,13 @@
 let JohnSchedule = Array(24).fill(true);
 let BobSchedule = Array(24).fill(true);
 let JennySchedule = Array(24).fill(true);
+let schedule;
+
+function consultantName(consultants) {
+  for (const consultant of consultants) {
+    schedule[consultant.name] = Array(24).fill(true);
+  }
+}
 
 function book(consultants, hour, duration, criteria) {
   let sortCriteria;
@@ -11,34 +18,36 @@ function book(consultants, hour, duration, criteria) {
   }
 
   for (let consultant of sortCriteria) {
-    let Schedule;
+    let schedule;
     if (consultant.name === "John") {
-      Schedule = JohnSchedule;
+      schedule = JohnSchedule;
     } else if (consultant.name === "Bob") {
-      Schedule = BobSchedule;
+      schedule = BobSchedule;
     } else if (consultant.name === "Jenny") {
-      Schedule = JennySchedule;
+      schedule = JennySchedule;
     }
 
     let availabilityCheck = true;
 
     for (let i = hour; i <= hour + duration; i++) {
-      if (Schedule[i] != true) {
+      if (schedule[i] !== true) {
         availabilityCheck = false;
         break;
       }
     }
+
     if (availabilityCheck) {
       for (let i = hour; i <= hour + duration; i++) {
-        Schedule[i] = false;
+        schedule[i] = false;
       }
-      return consultant.name;
+      console.log(consultant.name);
+      return;
     }
   }
   console.log("No Service");
 }
 
-const consultants = [
+let consultants = [
   { name: "John", rate: 4.5, price: 1000 },
   { name: "Bob", rate: 3, price: 1200 },
   { name: "Jenny", rate: 3.8, price: 800 },
