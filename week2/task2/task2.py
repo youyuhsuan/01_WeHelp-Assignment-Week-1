@@ -1,24 +1,18 @@
-JohnSchedule = [True] * 24
-BobSchedule = [True] * 24
-JennySchedule = [True] * 24
+def createSchedule(consultants):
+    schedule={}
+    for consultant in consultants:
+        schedule[consultant['name']] = [True] * 24
+    return schedule
 
 def book(consultants, hour, duration, criteria):
     sortCriteria = []
     if criteria ==  "price":
         sortCriteria = sorted(consultants, key=lambda x: x[criteria])
-
     else:
         sortCriteria = sorted(consultants, key=lambda x: x[criteria],reverse=True)
     
     for consultant in sortCriteria:
-        Schedule = None
-        if consultant["name"] == "John":
-            Schedule = JohnSchedule
-        elif consultant["name"] == "Bob":
-            Schedule = BobSchedule
-        elif consultant["name"] == "Jenny":
-            Schedule = JennySchedule
-
+        Schedule = schedule[consultant['name']]
         availabilityCheck = True
     
         for i in range(hour, hour + duration, 1):
@@ -29,7 +23,10 @@ def book(consultants, hour, duration, criteria):
         if availabilityCheck:
             for i in range(hour, hour + duration, 1):
                 Schedule[i] = False
-            return consultant["name"]
+            print(consultant['name'])
+            return consultant['name']
+            
+    print("No Service")
     return "No Service"
     
 consultants = [
@@ -37,6 +34,8 @@ consultants = [
     {"name": "Bob", "rate": 3, "price": 1200},
     {"name": "Jenny", "rate": 3.8, "price": 800},
 ]
+
+schedule = createSchedule(consultants)
 
 book(consultants, 15, 1, "price")  # Jenny
 book(consultants, 11, 2, "price")  # Jenny

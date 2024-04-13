@@ -1,15 +1,12 @@
-let JohnSchedule = Array(24).fill(true);
-let BobSchedule = Array(24).fill(true);
-let JennySchedule = Array(24).fill(true);
-let schedule;
-
-function consultantName(consultants) {
+function createSchedule(consultants) {
+  let schedule = {};
   for (const consultant of consultants) {
     schedule[consultant.name] = Array(24).fill(true);
   }
+  return schedule;
 }
 
-function book(consultants, hour, duration, criteria) {
+function book(schedule, consultants, hour, duration, criteria) {
   let sortCriteria;
   if (criteria === "price") {
     sortCriteria = consultants.sort((a, b) => a[criteria] - b[criteria]);
@@ -18,33 +15,34 @@ function book(consultants, hour, duration, criteria) {
   }
 
   for (let consultant of sortCriteria) {
-    let schedule;
-    if (consultant.name === "John") {
-      schedule = JohnSchedule;
-    } else if (consultant.name === "Bob") {
-      schedule = BobSchedule;
-    } else if (consultant.name === "Jenny") {
-      schedule = JennySchedule;
-    }
-
+    let consultantSchedule = schedule[consultant.name];
     let availabilityCheck = true;
 
-    for (let i = hour; i <= hour + duration; i++) {
-      if (schedule[i] !== true) {
+    for (
+      let i = hour;
+      i < Math.min(hour + duration, consultantSchedule.length);
+      i++
+    ) {
+      if (!consultantSchedule[i]) {
         availabilityCheck = false;
         break;
       }
     }
 
     if (availabilityCheck) {
-      for (let i = hour; i <= hour + duration; i++) {
-        schedule[i] = false;
+      for (
+        let i = hour;
+        i < Math.min(hour + duration, consultantSchedule.length);
+        i++
+      ) {
+        consultantSchedule[i] = false;
       }
       console.log(consultant.name);
-      return;
+      return consultant.name;
     }
   }
   console.log("No Service");
+  return "No Service";
 }
 
 let consultants = [
@@ -53,10 +51,12 @@ let consultants = [
   { name: "Jenny", rate: 3.8, price: 800 },
 ];
 
-book(consultants, 15, 1, "price"); // Jenny
-book(consultants, 11, 2, "price"); // Jenny
-book(consultants, 10, 2, "price"); // John
-book(consultants, 20, 2, "rate"); // John
-book(consultants, 11, 1, "rate"); // Bob
-book(consultants, 11, 2, "rate"); // No Service
-book(consultants, 14, 3, "price"); // John
+let schedule = createSchedule(consultants);
+
+book(schedule, consultants, 15, 1, "price"); // Jenny
+book(schedule, consultants, 11, 2, "price"); // Jenny
+book(schedule, consultants, 10, 2, "price"); // John
+book(schedule, consultants, 20, 2, "rate"); // John
+book(schedule, consultants, 11, 1, "rate"); // Bob
+book(schedule, consultants, 11, 2, "rate"); // No Service
+book(schedule, consultants, 14, 3, "price"); // John

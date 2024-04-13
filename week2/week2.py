@@ -41,6 +41,7 @@ def find_and_print(messages, current_station):
                         comparisonValue = SongshanXindian_Line_tempVaule
                         nearFriend=name
     print(nearFriend) 
+    return nearFriend
 
   
 messages={
@@ -58,27 +59,21 @@ find_and_print(messages, "Ximen") # print Bob
 find_and_print(messages, "Xindian City Hall") # print Vivian
 
 # task2
-JohnSchedule = [True] * 24
-BobSchedule = [True] * 24
-JennySchedule = [True] * 24
+def createSchedule(consultants):
+    schedule={}
+    for consultant in consultants:
+        schedule[consultant['name']] = [True] * 24
+    return schedule
 
 def book(consultants, hour, duration, criteria):
     sortCriteria = []
     if criteria ==  "price":
         sortCriteria = sorted(consultants, key=lambda x: x[criteria])
-
     else:
         sortCriteria = sorted(consultants, key=lambda x: x[criteria],reverse=True)
     
     for consultant in sortCriteria:
-        Schedule = None
-        if consultant["name"] == "John":
-            Schedule = JohnSchedule
-        elif consultant["name"] == "Bob":
-            Schedule = BobSchedule
-        elif consultant["name"] == "Jenny":
-            Schedule = JennySchedule
-
+        Schedule = schedule[consultant['name']]
         availabilityCheck = True
     
         for i in range(hour, hour + duration, 1):
@@ -89,7 +84,10 @@ def book(consultants, hour, duration, criteria):
         if availabilityCheck:
             for i in range(hour, hour + duration, 1):
                 Schedule[i] = False
-            return consultant["name"]
+            print(consultant['name'])
+            return consultant['name']
+            
+    print("No Service")
     return "No Service"
     
 consultants = [
@@ -97,6 +95,8 @@ consultants = [
     {"name": "Bob", "rate": 3, "price": 1200},
     {"name": "Jenny", "rate": 3.8, "price": 800},
 ]
+
+schedule = createSchedule(consultants)
 
 book(consultants, 15, 1, "price")  # Jenny
 book(consultants, 11, 2, "price")  # Jenny
@@ -116,11 +116,12 @@ def func(*data):
 
     for index, value in enumerate(newData):
         if newData.count(value) == 1:
-            print (data[index])
             check = False
-            break
+            print (data[index])
+            return data[index]
     if(check):
         print ("沒有")
+        return "沒有"
 
 
 func("彭大牆", "陳王明雅", "吳明")  # print 彭大牆
@@ -136,6 +137,7 @@ def get_number(index):
             number -= 1
         else:
             number += 4
+    print(number)
     return number
 
 
@@ -154,8 +156,9 @@ def find(spaces, stat, n):
     for i in range(n,max(availSeat),1):
         for j in range(len(availSeat)):
             if availSeat[j] == i:
+                print(j)
                 return j
-            
+    print(-1)        
     return -1
 
         

@@ -61,11 +61,15 @@ findAndPrint(messages, "Ximen"); // print Bobc
 findAndPrint(messages, "Xindian City Hall"); // print Vivian
 
 // task2
-let JohnSchedule = Array(24).fill(true);
-let BobSchedule = Array(24).fill(true);
-let JennySchedule = Array(24).fill(true);
+function createSchedule(consultants) {
+  let schedule = {};
+  for (const consultant of consultants) {
+    schedule[consultant.name] = Array(24).fill(true);
+  }
+  return schedule;
+}
 
-function book(consultants, hour, duration, criteria) {
+function book(schedule, consultants, hour, duration, criteria) {
   let sortCriteria;
   if (criteria === "price") {
     sortCriteria = consultants.sort((a, b) => a[criteria] - b[criteria]);
@@ -74,46 +78,51 @@ function book(consultants, hour, duration, criteria) {
   }
 
   for (let consultant of sortCriteria) {
-    let Schedule;
-    if (consultant.name === "John") {
-      Schedule = JohnSchedule;
-    } else if (consultant.name === "Bob") {
-      Schedule = BobSchedule;
-    } else if (consultant.name === "Jenny") {
-      Schedule = JennySchedule;
-    }
-
+    let consultantSchedule = schedule[consultant.name];
     let availabilityCheck = true;
 
-    for (let i = hour; i <= hour + duration; i++) {
-      if (Schedule[i] != true) {
+    for (
+      let i = hour;
+      i < Math.min(hour + duration, consultantSchedule.length);
+      i++
+    ) {
+      if (!consultantSchedule[i]) {
         availabilityCheck = false;
         break;
       }
     }
+
     if (availabilityCheck) {
-      for (let i = hour; i <= hour + duration; i++) {
-        Schedule[i] = false;
+      for (
+        let i = hour;
+        i < Math.min(hour + duration, consultantSchedule.length);
+        i++
+      ) {
+        consultantSchedule[i] = false;
       }
+      console.log(consultant.name);
       return consultant.name;
     }
   }
   console.log("No Service");
+  return "No Service";
 }
 
-const consultants = [
+let consultants = [
   { name: "John", rate: 4.5, price: 1000 },
   { name: "Bob", rate: 3, price: 1200 },
   { name: "Jenny", rate: 3.8, price: 800 },
 ];
 
-book(consultants, 15, 1, "price"); // Jenny
-book(consultants, 11, 2, "price"); // Jenny
-book(consultants, 10, 2, "price"); // John
-book(consultants, 20, 2, "rate"); // John
-book(consultants, 11, 1, "rate"); // Bob
-book(consultants, 11, 2, "rate"); // No Service
-book(consultants, 14, 3, "price"); // John
+let schedule = createSchedule(consultants);
+
+book(schedule, consultants, 15, 1, "price"); // Jenny
+book(schedule, consultants, 11, 2, "price"); // Jenny
+book(schedule, consultants, 10, 2, "price"); // John
+book(schedule, consultants, 20, 2, "rate"); // John
+book(schedule, consultants, 11, 1, "rate"); // Bob
+book(schedule, consultants, 11, 2, "rate"); // No Service
+book(schedule, consultants, 14, 3, "price"); // John
 
 // task3
 function func(...data) {
@@ -133,13 +142,14 @@ function func(...data) {
       newData.lastIndexOf(newData[midName])
     ) {
       let midNameKey = newData.indexOf(newData[midName]);
-      console.log(data[midNameKey]);
       check = false;
-      break;
+      console.log(data[midNameKey]);
+      return data[midNameKey];
     }
   }
   if (check) {
     console.log("沒有");
+    return "沒有";
   }
 }
 func("彭大牆", "陳王明雅", "吳明"); // print 彭大牆
@@ -157,6 +167,7 @@ function getNumber(index) {
       number += 4;
     }
   }
+  console.log(number);
   return number;
 }
 getNumber(1); // print 4
@@ -176,10 +187,12 @@ function find(spaces, stat, n) {
   for (let i = n; i <= Math.max(...availSeat); i++) {
     for (let j = 0; j < availSeat.length; j++) {
       if (availSeat[j] == i) {
+        console.log(j);
         return j;
       }
     }
   }
+  console.log(-1);
   return -1;
 }
 
