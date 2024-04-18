@@ -1,0 +1,44 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+//FLEX
+.promotion-card-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: $gutters;
+  gap: $gutters;
+}
+
+.promotion-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: calc((100% - $gutters * 2) / 3);
+  background-color: $primary;
+  gap: $gutters;
+  @include breakpoint(lg) {
+    &:nth-last-child(1) {
+      width: 100%;
+    }
+    &:nth-child(-n + 2) {
+      width: calc((100% - $gutters) / 2);
+    }
+  }
+  @include breakpoint(md) {
+    &:nth-child(-n + 2) {
+      width: 100%;
+    }
+  }
+
+  .card-img {
+    width: 80px;
+    height: 50px;
+    overflow: clip;
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+}

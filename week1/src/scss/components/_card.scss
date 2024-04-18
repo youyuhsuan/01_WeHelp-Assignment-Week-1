@@ -2,71 +2,71 @@
 @use "../abstracts/mixins" as *;
 @use "sass:math";
 
-// DISPLAY:FLEX
-// .card-section {
-//   display: flex;
-//   flex-wrap: wrap;
-//   gap: $gutters;
-// }
+//DISPLAY:flex
+.card-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gutters;
+}
 
-// .card {
-//   display: flex;
-//   flex-direction: row;
-//   position: relative;
-//   height: $card-height;
-//   position: relative;
-//   &:nth-child(1),
-//   &:nth-child(6) {
-//     width: calc((100% - 2 * $gutters) / 3);
-//   }
-//   &:not(:nth-child(1), :nth-child(6)) {
-//     width: calc((100% - 5 * $gutters) / 6);
-//   }
-//   @include breakpoint(lg) {
-//     &:not(:nth-last-child(-n + 2)) {
-//       width: calc((100% - $gutters * 3) / 4);
-//     }
-//     &:nth-last-child(-n + 2) {
-//       width: calc((100% - $gutters) / 2);
-//     }
-//   }
-//   @include breakpoint(md) {
-//     &:not(:nth-last-child(-n + 2)) {
-//       width: 100%;
-//     }
-//     &:nth-last-child(-n + 2) {
-//       width: 100%;
-//     }
-//   }
+.card {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  height: $card-height;
+  position: relative;
+  &:nth-child(1),
+  &:nth-child(6) {
+    width: calc((100% - 2 * $gutters) / 3);
+  }
+  &:not(:nth-child(1), :nth-child(6)) {
+    width: calc((100% - 5 * $gutters) / 6);
+  }
+  @include breakpoint(lg) {
+    &:not(:nth-last-child(-n + 2)) {
+      width: calc((100% - $gutters * 3) / 4);
+    }
+    &:nth-last-child(-n + 2) {
+      width: calc((100% - $gutters) / 2);
+    }
+  }
+  @include breakpoint(md) {
+    &:not(:nth-last-child(-n + 2)) {
+      width: 100%;
+    }
+    &:nth-last-child(-n + 2) {
+      width: 100%;
+    }
+  }
 
-//   .card-img {
-//     overflow: clip;
-//     img {
-//       width: 100%;
-//       height: auto;
-//       object-fit: cover;
-//     }
-//   }
+  .card-img {
+    overflow: clip;
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
 
-//   .fa-solid {
-//     position: absolute;
-//     top: 8px;
-//     right: 8px;
-//     font-size: 24px;
-//     color: $secondary;
-//   }
+  .fa-solid {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 24px;
+    color: $secondary;
+  }
 
-//   .card-title {
-//     position: absolute;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     bottom: 0;
-//     width: 100%;
-//     height: $title-height;
-//     background-color: rgba($primary, 50%);
-//   }
-// }
+  .card-title {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    width: 100%;
+    height: $title-height;
+    background-color: rgba($primary, 50%);
+  }
+}
 
 //GRID
 // .card-section {
@@ -133,68 +133,68 @@
 //   }
 // }
 
-//Flex
-.card-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $gutters;
-}
+// //Flex
+// .card-section {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: $gutters;
+// }
 
-.card {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  height: $card-height;
-  position: relative;
-  &:nth-child(1),
-  &:nth-child(6) {
-    flex: 1 0 calc((100% - 4 * $gutters) / 6);
-  }
-  &:not(:nth-child(1), :nth-child(6)) {
-    flex: 0 0 calc((100% - 4 * $gutters) / 6);
-  }
-  @include breakpoint(lg) {
-    &:not(:nth-last-child(-n + 2)) {
-      flex: 0 0 calc((100% - 3 * $gutters) / 4);
-    }
-    &:nth-last-child(-n + 2) {
-      flex: 1 0 calc((100% - 3 * $gutters) / 4);
-    }
-  }
-  @include breakpoint(md) {
-    &:not(:nth-last-child(-n + 2)) {
-      flex: 0 0 100%;
-    }
-    &:nth-last-child(-n + 2) {
-      flex: 0 0 100%;
-    }
-  }
+// .card {
+//   display: flex;
+//   flex-direction: row;
+//   position: relative;
+//   height: $card-height;
+//   position: relative;
+//   &:nth-child(1),
+//   &:nth-child(6) {
+//     flex: 1 0 calc((100% - 4 * $gutters) / 6);
+//   }
+//   &:not(:nth-child(1), :nth-child(6)) {
+//     flex: 0 0 calc((100% - 4 * $gutters) / 6);
+//   }
+//   @include breakpoint(lg) {
+//     &:not(:nth-last-child(-n + 2)) {
+//       flex: 0 0 calc((100% - 3 * $gutters) / 4);
+//     }
+//     &:nth-last-child(-n + 2) {
+//       flex: 1 0 calc((100% - 3 * $gutters) / 4);
+//     }
+//   }
+//   @include breakpoint(md) {
+//     &:not(:nth-last-child(-n + 2)) {
+//       flex: 0 0 100%;
+//     }
+//     &:nth-last-child(-n + 2) {
+//       flex: 0 0 100%;
+//     }
+//   }
 
-  .card-img {
-    overflow: clip;
-    img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-  }
+//   .card-img {
+//     overflow: clip;
+//     img {
+//       width: 100%;
+//       height: auto;
+//       object-fit: cover;
+//     }
+//   }
 
-  .fa-solid {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 24px;
-    color: $secondary;
-  }
+//   .fa-solid {
+//     position: absolute;
+//     top: 8px;
+//     right: 8px;
+//     font-size: 24px;
+//     color: $secondary;
+//   }
 
-  .card-title {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    bottom: 0;
-    width: 100%;
-    height: $title-height;
-    background-color: rgba($primary, 50%);
-  }
-}
+//   .card-title {
+//     position: absolute;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     bottom: 0;
+//     width: 100%;
+//     height: $title-height;
+//     background-color: rgba($primary, 50%);
+//   }
+// }

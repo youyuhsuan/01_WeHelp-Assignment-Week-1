@@ -1,0 +1,74 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+//input
+.hamburger-menu {
+  display: none;
+  @include breakpoint(md) {
+    display: flex;
+    flex-direction: column;
+    gap: $hamburger-gutters;
+    width: max-content;
+    position: relative;
+    z-index: 3;
+    cursor: pointer;
+
+    &::after,
+    &::before,
+    input {
+      content: "";
+      width: $bar-width;
+      height: $bar-height;
+      transform-origin: left center;
+      background-color: $torinoko;
+      border-radius: 24px;
+    }
+
+    &:has(input:checked) {
+      &::before {
+        rotate: 45deg;
+        width: $hamburger-x-width;
+        translate: 0 calc($bar-height/ -2);
+      }
+      &::after {
+        rotate: -45deg;
+        width: $hamburger-x-width;
+        translate: 0 calc($bar-height / 2);
+      }
+      .sidenav {
+        width: 50%;
+      }
+    }
+    &:has(input:checked) + .navbar-items {
+      width: 50%;
+    }
+
+    input {
+      appearance: none;
+      padding: 0;
+      margin: 0;
+      outline: none;
+      &:checked {
+        opacity: 0;
+        width: 0;
+      }
+    }
+  }
+}
+
+// Button
+button {
+  position: relative;
+  z-index: 3;
+  background: none;
+  border: none;
+  display: none;
+  @include breakpoint(md) {
+    display: block;
+  }
+
+  .fa-bars,
+  .fa-xmark {
+    display: none;
+  }
+}

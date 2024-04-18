@@ -1,0 +1,38 @@
+@use "sass:math";
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 360px,
+  md: 600px,
+  lg: 1200px,
+  xl: 1920px,
+);
+
+$gutters: 20px;
+$card-height: 200px;
+$title-height: 50px;
+
+//hambuger
+$bar-width: 24px;
+$bar-height: 4px;
+$hamburger-gutters: 2px;
+$hamburger-height: calc($bar-height * 3 + $hamburger-gutters * 2);
+$hamburger-x-width: math.sqrt(calc($hamburger-height / 1px));
+
+$uguisu: #dfecff;
+$torinoko: #44495a;
+
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+$primary: $torinoko;
+$secondary: $uguisu;

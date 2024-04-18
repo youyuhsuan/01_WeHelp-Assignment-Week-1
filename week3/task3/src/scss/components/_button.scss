@@ -1,0 +1,39 @@
+@use "../abstracts/variables" as *;
+@use "../base/typography" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:math";
+
+.loadmore-section {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+}
+.loadmore {
+  background-color: $white;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  box-shadow: rgba(69, 80, 80, 0.5) 0 2px 5px 0;
+  box-sizing: border-box;
+  color: $torinoko;
+  cursor: pointer;
+  display: inline-block;
+  font-size: $font-size;
+  line-height: 24px;
+  padding: calc(#{$gutters / 2}) #{$gutters * 1.2};
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  margin: #{$gutters * 1.2} auto;
+  &:hover {
+    background-color: #f7fafa;
+  }
+  &:focus {
+    border-color: $torinoko;
+    box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
+    outline: 0;
+  }
+}

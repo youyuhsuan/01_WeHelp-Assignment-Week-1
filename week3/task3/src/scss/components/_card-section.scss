@@ -1,0 +1,113 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.card-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: calc(#{$gutters * 1.2}) auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: $gutters;
+  @include breakpoint(lg) {
+    width: 90%;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include breakpoint(md) {
+    grid-template-columns: 1fr;
+    gap: inherit;
+  }
+
+  .card {
+    display: flex;
+    position: relative;
+    &:not(:nth-child(-n + 3)) {
+      height: $card-height;
+    }
+
+    .card-img {
+      width: 100%;
+      overflow: clip;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &:nth-child(-n + 3) {
+      flex-direction: row;
+      align-items: center;
+      background-color: $primary;
+
+      grid-column: span 2;
+      gap: $gutters;
+      .card-img {
+        width: 80px;
+        height: 50px;
+        overflow: clip;
+      }
+    }
+
+    &:not(:nth-child(-n + 3)) {
+      .fa-solid {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 24px;
+        color: $secondary;
+        filter: drop-shadow(0px 20px 30px -10pxrgb (38, 57, 77));
+        // mix-blend-mode: difference;
+      }
+
+      .card-title {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        bottom: 0;
+        width: 100%;
+        height: $title-height;
+        background-color: rgba($primary, 50%);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        h1 {
+          max-width: 100%; /* 設置最大寬度 */
+          overflow: hidden; /* 隱藏溢出的部分 */
+          text-overflow: ellipsis; /* 使用省略號 */
+        }
+      }
+    }
+
+    &:nth-child(5n + 4) {
+      grid-column: span 2;
+    }
+
+    @include breakpoint(lg) {
+      &:nth-child(-n + 2) {
+        grid-column: span 2;
+      }
+      &:nth-child(3) {
+        grid-column: span 4;
+      }
+      &:nth-child(5n + 4) {
+        grid-column: initial;
+      }
+
+      &:nth-last-child(-n + 2) {
+        grid-column: span 2;
+      }
+    }
+
+    @include breakpoint(md) {
+      margin-bottom: $gutters;
+      &:nth-child(-n + 3) {
+        grid-column: initial;
+      }
+      &:not(:nth-child(-n + 3)) {
+        grid-column: 1;
+      }
+    }
+  }
+}
