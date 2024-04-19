@@ -23,14 +23,14 @@ results_1 = data_1['data']['results']
 results_2 = data_2['data']
   
 with open('week3/task1/spot.csv',mode="w",encoding="utf-8") as file:
-    
     for result_1 in results_1:
         SERIAL_NO_1 = result_1.get('SERIAL_NO', '')
         for result_2 in results_2:
             SERIAL_NO_2 = result_2.get('SERIAL_NO', '')
             if SERIAL_NO_1 == SERIAL_NO_2:
                 address = result_2.get('address', '')
-                district = address[5:8]         
+                district = address[5:8]      
+                   
                 spottitle = result_1.get('stitle', '')
                 longitude = result_1.get('longitude', '')
                 latitude = result_1.get('latitude', '')
@@ -41,16 +41,35 @@ with open('week3/task1/spot.csv',mode="w",encoding="utf-8") as file:
                 file.write("{},{},{},{},{}\n".format(spottitle, district, longitude, latitude, imageURL))
 
 attractions_dict = {} 
-for result_2 in results_2:
-    stationname_2 = result_2.get('MRT', '')
-    attractions_dict[stationname_2] = []
-    
-    for result_1 in results_1:
-        stationname_1 = result_1.get('info', '')
-
-        if stationname_2 in stationname_1:
+for result_1 in results_1:
+    SERIAL_NO_1 = result_1.get('SERIAL_NO', '')
+    for result_2 in results_2:
+        SERIAL_NO_2 = result_2.get('SERIAL_NO', '')
+        if SERIAL_NO_1 == SERIAL_NO_2:
+            stationname = result_2.get('MRT', '')
             attractiontitle_list.append(result_1.get('stitle', ''))
-            attractions_dict[stationname_2].append(result_1.get('stitle', ''))
+            if stationname not in attractions_dict:
+                attractions_dict[stationname] = [] 
+                attractions_dict[stationname].append(result_1.get('stitle', ''))
+            else:
+                attractions_dict[stationname].append(result_1.get('stitle', ''))
+
+
+    
+                
+# for result_2 in results_2:
+#     # print(request_2)
+#     stationname_2 = result_2.get('MRT', '')
+#     print(stationname_2)
+#     attractions_dict[stationname_2] = []
+    
+#     for result_1 in results_1:
+#         # stationname_1 = result_1.get('info', '')
+#         # print(stationname_1)
+#         if stationname_2 in stationname_1:
+#             attractiontitle_list.append(result_1.get('stitle', ''))
+#             attractions_dict[stationname_2].append(result_1.get('stitle', ''))
+#     # print(attractions_dict)
 
 with open('week3/task1/mrt.csv', mode="w",encoding="utf-8") as file:
     for station, attractions in attractions_dict.items():
