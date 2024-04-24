@@ -1,0 +1,98 @@
+$primary-color: #7f9086;
+$second-color: #676a4f;
+$light-color: #ffffff;
+$gutter: 3.2rem;
+$border-radius: 4px;
+
+body {
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 2px;
+  color: $primary-color;
+}
+
+.title {
+  background-color: $primary-color;
+  color: $light-color;
+  height: 6rem;
+  margin-bottom: $gutter;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  h1 {
+    text-align: center;
+    line-height: 1;
+  }
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin-bottom: 1rem;
+  input {
+    border: 1px solid $primary-color;
+    border-radius: $border-radius;
+    padding: 4px;
+    &::placeholder {
+      color: $second-color;
+      letter-spacing: 2px;
+      font-size: small;
+    }
+  }
+}
+
+.agree_terms {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  font-size: small;
+  input[type="checkbox"] {
+    margin-left: 4px;
+    accent-color: $primary-color;
+  }
+}
+
+#login_btn,
+#square_btn {
+  background-color: $primary-color;
+  border-radius: $border-radius;
+  border-style: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  color: $light-color;
+  cursor: pointer;
+  display: inline-block;
+  letter-spacing: 4px;
+  font-weight: 700;
+  line-height: 1.5;
+  outline: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  touch-action: manipulation;
+  width: 100px;
+  &:hover,
+  &:focus {
+    opacity: 0.75;
+  }
+}
+
+a {
+  color: $second-color;
+}

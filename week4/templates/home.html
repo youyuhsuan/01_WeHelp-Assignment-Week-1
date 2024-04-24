@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>home</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', path='wehelp.svg') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', path='normalize.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', path='styles.css') }}"
+    />
+  </head>
+  <body>
+    <main>
+      <section>
+        <div class="title">
+          <h1>歡迎光臨，請輸入帳號密碼</h1>
+        </div>
+        <div class="container">
+          <h2 class="subtitle">登入系統</h2>
+          <form action="/signin" method="post">
+            <label for="account"
+              >帳號
+              <input
+                type="text"
+                id="account"
+                name="username"
+                placeholder="請輸入您的帳號"
+              />
+            </label>
+            <label for="password"
+              >密碼
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="請輸入您的密碼"
+              />
+            </label>
+            <label for="agree_terms" class="agree_terms">
+              <input
+                type="checkbox"
+                id="agree_terms"
+                name="agree_terms"
+              />同意條款
+            </label>
+            <button type="submit" role="button" id="login_btn">提交</button>
+          </form>
+        </div>
+      </section>
+      <hr />
+
+      <section>
+        <div class="container">
+          <h2 class="subtitle">計算正整數的平方</h2>
+          <form id="square_form" method="get">
+            <label for="number"
+              >正整數
+              <input
+                type="number"
+                id="number"
+                name="number"
+                placeholder="請輸入數字"
+              />
+            </label>
+            <button type="submit" role="button" id="square_btn">提交</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <script type="text/javascript">
+      const agreeTerms = document.getElementById("agree_terms");
+      const loginBtn = document.getElementById("login_btn");
+      loginBtn.addEventListener("click", checkAgree);
+
+      function checkAgree(event) {
+        if (!agreeTerms.checked) {
+          event.preventDefault();
+          alert("Please check the checkbox first");
+        }
+      }
+    </script>
+    <script>
+      document
+        .getElementById("square_form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // 阻止表單的默認行為
+          const number = document.getElementById("number").value;
+          if (!Number.isInteger(Number(number))) {
+            alert("Please enter a positive integer");
+            return;
+          }
+          const url = `/square/${number}`;
+          window.location.href = url;
+        });
+    </script>
+  </body>
+</html>

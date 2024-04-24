@@ -53,10 +53,7 @@ for result_1 in results_1:
                 attractions_dict[stationname].append(result_1.get('stitle', ''))
             else:
                 attractions_dict[stationname].append(result_1.get('stitle', ''))
-
-
-    
-                
+ 
 # for result_2 in results_2:
 #     # print(request_2)
 #     stationname_2 = result_2.get('MRT', '')

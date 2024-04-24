@@ -328,7 +328,8 @@ body {
 .card-section .card .card-img img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .card-section .card:nth-child(-n+3) {
   flex-direction: row;
@@ -405,6 +406,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    width: -moz-max-content;
     width: max-content;
     position: relative;
     z-index: 3;
@@ -436,7 +438,9 @@ body {
     width: 50%;
   }
   .hamburger-menu input {
-    appearance: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
     padding: 0;
     margin: 0;
     outline: none;
@@ -486,7 +490,9 @@ button .fa-xmark {
   position: relative;
   text-align: center;
   text-decoration: none;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
   margin: 24px auto;
@@ -498,6 +504,4 @@ button .fa-xmark {
   border-color: #44495a;
   box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
   outline: 0;
-}
-
-/*# sourceMappingURL=all.css.map */
+}/*# sourceMappingURL=all.css.map */

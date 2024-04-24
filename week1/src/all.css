@@ -330,7 +330,8 @@ body {
 .promotion-card .card-img img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .card-section {
@@ -347,25 +348,25 @@ body {
   position: relative;
 }
 .card:nth-child(1), .card:nth-child(6) {
-  flex: 1 0 calc((100% - 80px) / 6);
+  width: calc((100% - 40px) / 3);
 }
 .card:not(:nth-child(1), :nth-child(6)) {
-  flex: 0 0 calc((100% - 80px) / 6);
+  width: calc((100% - 100px) / 6);
 }
 @media (max-width: 1200px) {
   .card:not(:nth-last-child(-n+2)) {
-    flex: 0 0 calc((100% - 60px) / 4);
+    width: calc((100% - 60px) / 4);
   }
   .card:nth-last-child(-n+2) {
-    flex: 1 0 calc((100% - 60px) / 4);
+    width: calc((100% - 20px) / 2);
   }
 }
 @media (max-width: 600px) {
   .card:not(:nth-last-child(-n+2)) {
-    flex: 0 0 100%;
+    width: 100%;
   }
   .card:nth-last-child(-n+2) {
-    flex: 0 0 100%;
+    width: 100%;
   }
 }
 .card .card-img {
@@ -374,7 +375,8 @@ body {
 .card .card-img img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .card .fa-solid {
   position: absolute;
@@ -402,6 +404,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    width: -moz-max-content;
     width: max-content;
     position: relative;
     z-index: 3;
@@ -433,7 +436,9 @@ body {
     width: 50%;
   }
   .hamburger-menu input {
-    appearance: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
     padding: 0;
     margin: 0;
     outline: none;
@@ -459,6 +464,4 @@ button {
 button .fa-bars,
 button .fa-xmark {
   display: none;
-}
-
-/*# sourceMappingURL=all.css.map */
+}/*# sourceMappingURL=all.css.map */
