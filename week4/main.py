@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Request, HTTPException, status, Header, Form, Depends
-
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -46,13 +45,21 @@ async def root(
 
 @app.post("/signin", response_model=User)
 async def signin(
-    username: Annotated[str, Form()],
-    password: Annotated[str, Form()],
+    username: str = Form(None, description="Username"),
+    password: str = Form(None, description="Password"),
 ):
-    user_data = fake_users_db.get(username)
     set_signed_in_state(True)
+    if not username or not password:
+        raise HTTPException(
+            status_code=422, detail="Username or password cannot be empty"
+        )
+
+    user_data = fake_users_db.get(username)
+
     if user_data is None or user_data["password"] != password:
-        raise HTTPException(status_code=401)
+        raise HTTPException(
+            status_code=401, detail="Username or password is not correct"
+        )
     return RedirectResponse(url="/menber", status_code=status.HTTP_303_SEE_OTHER)
 
 
@@ -65,7 +72,7 @@ async def verify_signed_in_state(request: Request, call_next):
 
 
 async def http_exception_handler(request: Request, exc: HTTPException):
-    if exc.status_code == 401:
+    if exc.status_code == 401 or exc.status_code == 422:
         error_message = "Username or password is not correct"
         return RedirectResponse(
             url=f"/error?message={error_message}", status_code=status.HTTP_303_SEE_OTHER
