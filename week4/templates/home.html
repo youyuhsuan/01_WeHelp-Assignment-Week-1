@@ -27,11 +27,11 @@
         <div class="container">
           <h2 class="subtitle">登入系統</h2>
           <form action="/signin" method="post">
-            <label for="account"
+            <label for="username"
               >帳號
               <input
                 type="text"
-                id="account"
+                id="username"
                 name="username"
                 placeholder="請輸入您的帳號"
               />
@@ -92,13 +92,15 @@
       document
         .getElementById("square_form")
         .addEventListener("submit", function (event) {
-          event.preventDefault(); // 阻止表單的默認行為
-          const number = document.getElementById("number").value;
-          if (!Number.isInteger(Number(number))) {
+          event.preventDefault(); // Prevent the form's default behavior
+          let number = document.getElementById("number").value;
+          if (number === "") {
+            number = 0;
+          } else if (!Number.isInteger(Number(number))) {
             alert("Please enter a positive integer");
             return;
           }
-          const url = `/square/${number}`;
+          let url = `/square/${number}`;
           window.location.href = url;
         });
     </script>

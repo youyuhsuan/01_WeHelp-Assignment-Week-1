@@ -3,11 +3,10 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-from typing import Annotated
+from starlette.middleware.sessions import SessionMiddleware
 import uvicorn
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
@@ -24,17 +23,6 @@ fake_users_db = {
     }
 }
 
-signed_in_state = False
-
-
-def set_signed_in_state(state: bool):
-    global signed_in_state
-    signed_in_state = state
-
-
-def get_signed_in_state() -> bool:
-    return signed_in_state
-
 
 @app.get("/", response_class=HTMLResponse)
 async def root(
@@ -45,30 +33,21 @@ async def root(
 
 @app.post("/signin", response_model=User)
 async def signin(
+    request: Request,
     username: str = Form(None, description="Username"),
     password: str = Form(None, description="Password"),
 ):
-    set_signed_in_state(True)
     if not username or not password:
         raise HTTPException(
             status_code=422, detail="Username or password cannot be empty"
         )
-
     user_data = fake_users_db.get(username)
-
     if user_data is None or user_data["password"] != password:
         raise HTTPException(
             status_code=401, detail="Username or password is not correct"
         )
-    return RedirectResponse(url="/menber", status_code=status.HTTP_303_SEE_OTHER)
-
-
-@app.middleware("http")
-async def verify_signed_in_state(request: Request, call_next):
-    if request.url.path == "/menber" and not get_signed_in_state():
-        return RedirectResponse(url="/")
-    response = await call_next(request)
-    return response
+    request.session["SIGNED-IN"] = True
+    return RedirectResponse(url="/member", status_code=status.HTTP_303_SEE_OTHER)
 
 
 async def http_exception_handler(request: Request, exc: HTTPException):
@@ -77,6 +56,9 @@ async def http_exception_handler(request: Request, exc: HTTPException):
         return RedirectResponse(
             url=f"/error?message={error_message}", status_code=status.HTTP_303_SEE_OTHER
         )
+    elif exc.status_code == 403:
+        error_message = "Please log in to access this resource"
+        return RedirectResponse(url="/", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
 
 
 app.add_exception_handler(HTTPException, http_exception_handler)
@@ -87,24 +69,36 @@ async def error(request: Request, message: str = None):
     return templates.TemplateResponse("error.html", {"request": request})
 
 
-@app.get("/menber")
-async def menber(request: Request):
-    return templates.TemplateResponse("menber.html", {"request": request})
+@app.get("/member")
+async def member(request: Request):
+    SIGNED_IN = request.session.get("SIGNED-IN")
+    if not SIGNED_IN:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+    return templates.TemplateResponse("member.html", {"request": request})
 
 
 @app.get("/signout")
 async def signout(request: Request):
-    set_signed_in_state(False)
+    request.session["SIGNED-IN"] = False
     return RedirectResponse(url="/", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
 
 
 @app.get("/square/{number}")
-async def square_number(request: Request, number: int):
+async def square_number(request: Request, number: int = 0):
     squared_number = number * number
     return templates.TemplateResponse(
         "square.html", {"request": request, "squared_number": squared_number}
     )
 
+
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="some-random-string",
+    max_age=None,
+    session_cookie="session",
+)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 if __name__ == "__main__":
     uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)
