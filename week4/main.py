@@ -1,9 +1,13 @@
-from fastapi import FastAPI, Request, HTTPException, status, Header, Form, Depends
+from fastapi import FastAPI, Request, HTTPException, status, Form, Query
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from typing import Annotated
+
 from pydantic import BaseModel
 from starlette.middleware.sessions import SessionMiddleware
+from urllib.parse import urlencode
+
 import uvicorn
 
 app = FastAPI()
@@ -37,43 +41,49 @@ async def signin(
     username: str = Form(None, description="Username"),
     password: str = Form(None, description="Password"),
 ):
-    if not username or not password:
+    if username in fake_users_db and password in fake_users_db:
+        request.session["SIGNED-IN"] = True
+        return RedirectResponse(url="/member", status_code=status.HTTP_303_SEE_OTHER)
+    elif not username or not password:
         raise HTTPException(
-            status_code=422, detail="Username or password cannot be empty"
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Username or password cannot be empty",
         )
-    user_data = fake_users_db.get(username)
-    if user_data is None or user_data["password"] != password:
+    else:
         raise HTTPException(
-            status_code=401, detail="Username or password is not correct"
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Username or password is not correct",
         )
-    request.session["SIGNED-IN"] = True
-    return RedirectResponse(url="/member", status_code=status.HTTP_303_SEE_OTHER)
 
 
 async def http_exception_handler(request: Request, exc: HTTPException):
-    if exc.status_code == 401 or exc.status_code == 422:
-        error_message = "Username or password is not correct"
+
+    if exc.status_code == 403 or exc.status_code == 422:
+        error_message = exc.detail
         return RedirectResponse(
             url=f"/error?message={error_message}", status_code=status.HTTP_303_SEE_OTHER
         )
-    elif exc.status_code == 403:
-        error_message = "Please log in to access this resource"
-        return RedirectResponse(url="/", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
 
 
 app.add_exception_handler(HTTPException, http_exception_handler)
 
 
 @app.get("/error")
-async def error(request: Request, message: str = None):
-    return templates.TemplateResponse("error.html", {"request": request})
+async def error(
+    request: Request,
+    message: str = None,
+):
+    return templates.TemplateResponse(
+        "error.html",
+        {"request": request, "error_message": message},
+    )
 
 
 @app.get("/member")
 async def member(request: Request):
     SIGNED_IN = request.session.get("SIGNED-IN")
     if not SIGNED_IN:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+        return RedirectResponse(url="/", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
     return templates.TemplateResponse("member.html", {"request": request})
 
 

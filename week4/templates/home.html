@@ -92,16 +92,17 @@
       document
         .getElementById("square_form")
         .addEventListener("submit", function (event) {
-          event.preventDefault(); // Prevent the form's default behavior
           let number = document.getElementById("number").value;
           if (number === "") {
             number = 0;
-          } else if (!Number.isInteger(Number(number))) {
+          } else if (number < 0) {
             alert("Please enter a positive integer");
-            return;
+            event.preventDefault(); // Prevent the form's default behavior
+          } else {
+            let url = `/square/${number}`;
+            window.location.href = url;
+            event.preventDefault(); // Prevent the form's default behavior
           }
-          let url = `/square/${number}`;
-          window.location.href = url;
         });
     </script>
   </body>
