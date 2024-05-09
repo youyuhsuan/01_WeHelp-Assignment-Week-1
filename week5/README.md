@@ -6,7 +6,7 @@
 
   ```SQL
   CREATE DATABASE website;
-  SHOW DATABASE;
+  SHOW DATABASES;
   ```
 
   ![CREATE DATABASE website](./img/2_1_DATABASE_website.png.png)
@@ -15,12 +15,12 @@
   ```SQL
   USE website;
   CREATE TABLE member(
-  	id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT'Unique ID',
-    name VARCHAR(255) NOT NULL COMMENT'Name',
-  	username VARCHAR(255) NOT NULL COMMENT'Username',
-  	password VARCHAR(255) NOT NULL COMMENT'Password',
-    follower_count INT NOT NULL DEFAULT 0 COMMENT'Follower Count',
-    time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT'Signup Time'
+  	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+  	username VARCHAR(255) NOT NULL,
+  	password VARCHAR(255) NOT NULL,
+    follower_count INT NOT NULL DEFAULT 0,
+    time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
   SHOW TABLES;
   ```

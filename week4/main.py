@@ -41,6 +41,7 @@ async def signin(
 ):
     if username in fake_users_db and password in fake_users_db:
         request.session["SIGNED-IN"] = True
+        print(request.session)
         return RedirectResponse(url="/member", status_code=status.HTTP_303_SEE_OTHER)
     elif not username or not password:
         raise HTTPException(
@@ -55,7 +56,6 @@ async def signin(
 
 
 async def http_exception_handler(request: Request, exc: HTTPException):
-
     if exc.status_code == 403 or exc.status_code == 422:
         error_message = exc.detail
         return RedirectResponse(

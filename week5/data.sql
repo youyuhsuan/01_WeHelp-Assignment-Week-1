@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `member`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `member` (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'Unique ID',
-  `name` varchar(255) NOT NULL COMMENT 'Name',
-  `username` varchar(255) NOT NULL COMMENT 'Username',
-  `password` varchar(255) NOT NULL COMMENT 'Password',
-  `follower_count` int NOT NULL DEFAULT '0' COMMENT 'Follower Count',
-  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Signup Time',
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `follower_count` int NOT NULL DEFAULT '0',
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -51,11 +51,11 @@ DROP TABLE IF EXISTS `message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `message` (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'Unique ID',
-  `member_id` bigint NOT NULL COMMENT 'Member ID for Message Sender',
-  `content` varchar(255) NOT NULL COMMENT 'Content',
-  `like_count` int unsigned NOT NULL DEFAULT '0' COMMENT 'Like Count',
-  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Publish Time',
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `member_id` bigint NOT NULL,
+  `content` varchar(255) NOT NULL,
+  `like_count` int unsigned NOT NULL DEFAULT '0',
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`),
   CONSTRAINT `message_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`)
