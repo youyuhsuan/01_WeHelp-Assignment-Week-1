@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <title>menber</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', path='wehelp.svg') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', path='normalize.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', path='styles.css') }}"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="title">
+        <h1>Welcome, this is the member page!</h1>
+      </div>
+      <div class="container">
+        <section>
+          <h2 class="subtitle">
+            {{ PAGE_NAME }}, you have successfully logged in to the system!
+          </h2>
+          <a href="/signout">Sign out</a>
+        </section>
+        <hr />
+        <section class="search_username">
+          <h2 class="subtitle">Search Username</h2>
+          <form action="/api/member" method="GET" id="search_form">
+            <label for="username">
+              <input
+                type="text"
+                id="username"
+                name="username"
+                data-message-id="{{ username }}"
+                placeholder="Enter your username"
+              />
+            </label>
+            <button type="submit" id="search_btn">Search</button>
+          </form>
+          <span class="member_info"></span>
+        </section>
+        <hr />
+        <section class="update_name">
+          <h2 class="subtitle">Updating Name</h2>
+          <form action="/api/member" method="PATCH" id="update_form">
+            <label for="name">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                data-message-id="{{ name }}"
+                placeholder="Enter new name"
+              />
+            </label>
+            <button type="submit" id="update_btn">Update</button>
+          </form>
+          <span class="update_status"></span>
+        </section>
+        <hr />
+        <section class="create_message">
+          <h2 class="subtitle">快來留言吧！</h2>
+          <form action="/createMessage" method="POST" id="create_message_form">
+            <label for="content">
+              <input
+                type="text"
+                id="content"
+                name="content"
+                placeholder="請輸入您的留言"
+              />
+            </label>
+            <button type="submit" id="submit_btn">送出</button>
+          </form>
+          <hr />
+          <div class="message_board">
+            <div class="messages">
+              {% for message in messages[::-1] %}
+              <span>
+                {{ message[2] }} : {{ message[3] }} {% if message[1] ==
+                MEMBER_ID %}
+                <button
+                  type="button"
+                  class="delete_btn"
+                  aria-label="Delete"
+                  data-message-id="{{ message[0] }}"
+                >
+                  X
+                </button>
+                {% endif %}
+              </span>
+              {% endfor %}
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', path='js/validate.js') }}"
+  ></script>
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', path='js/queryMember.js') }}"
+  ></script>
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', path='js/displayMemberInfo.js') }}"
+  ></script>
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', path='js/handleSearchClick.js') }}"
+  ></script>
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', path='js/messageDeletion.js') }}"
+  ></script>
+  <script></script>
+</html>

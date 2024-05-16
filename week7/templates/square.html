@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>squared</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', path='wehelp.svg') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', path='normalize.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', path='styles.css') }}"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="title">
+        <h1>正整數平方地計算結果</h1>
+      </div>
+      <div class="container">
+        <p>{{squared_number}}</p>
+      </div>
+    </main>
+  </body>
+</html>

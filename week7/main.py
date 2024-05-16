@@ -1,12 +1,22 @@
-from fastapi import FastAPI, Request, Response, HTTPException, status, Form, Depends
+from fastapi import (
+    FastAPI,
+    Request,
+    Response,
+    HTTPException,
+    status,
+    Form,
+    Depends,
+)
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.encoders import jsonable_encoder
 from fastapi.templating import Jinja2Templates
+
 from typing import Annotated
 from starlette.middleware.sessions import SessionMiddleware
 from passlib.context import CryptContext
 from pydantic import BaseModel
+
 import mysql.connector
 from mysql.connector import errorcode
 import uvicorn
@@ -17,7 +27,7 @@ def get_db():
     try:
         cnx = mysql.connector.connect(
             user="root",
-            password="23322907",
+            password="dhfdshfjkhsd",
             host="localhost",
             database="website",
         )
@@ -54,6 +64,10 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     name: str
     hashed_password: str
+
+
+class UpdateName(BaseModel):
+    name: str
 
 
 app = FastAPI()
@@ -119,7 +133,6 @@ async def signin(
 ):
     cnx, cursor = db
     matched_user = UserBase(username=username)
-    print(matched_user)
     query = "SELECT id,name, username, hashed_password FROM member WHERE username = %s"
     cursor.execute(query, (matched_user.username,))
     matched_user = cursor.fetchone()
@@ -187,8 +200,67 @@ async def member(
     )
 
 
+@app.get("/api/member", response_model=UserBase)
+async def search_username(
+    request: Request,
+    username: str,
+    db: tuple = Depends(get_db),
+):
+    cnx, cursor = db
+    query = "SELECT member.id, member.name ,member.username FROM message JOIN member ON member.id = message.member_id WHERE member.username= %s"
+    cursor.execute(query, (username,))
+    matched_member = cursor.fetchone()
+
+    if matched_member is not None:
+        id, name, username = matched_member
+        return Response(
+            content=json.dumps(
+                {"data": {"id": id, "name": name, "username": username}}
+            ),
+            status_code=200,
+            media_type="application/json",
+        )
+    else:
+        # return Response(
+        #     content=json.dumps({"data": None}),
+        #     status_code=200,
+        #     media_type="application/json",
+        # )
+        return Response(status_code=204)
+
+
+@app.patch("/api/member", response_model=UpdateName)
+async def update_name(
+    request: Request,
+    update_name: UpdateName,
+    db: tuple = Depends(get_db),
+):
+    cnx, cursor = db
+    MEMBER_ID = request.session.get("MEMBER_ID")
+    updated_name = update_name.name
+    print(MEMBER_ID, updated_name)
+    print(cursor.rowcount)
+    query = "UPDATE member SET name = %s WHERE id = %s"
+    cursor.execute(query, (updated_name, MEMBER_ID))
+    cnx.commit()
+    print(cursor.rowcount)
+    if cursor.rowcount > -1:  # Check if the update was successful
+        return Response(
+            content=json.dumps({"ok": True}),
+            status_code=200,
+            media_type="application/json",
+        )
+    else:
+        # return Response(
+        #     content=json.dumps({"error": True}),
+        #     status_code=200,
+        #     media_type="application/json",
+        # )
+        return Response(status_code=204)
+
+
 @app.delete("/deleteMessage/{messageId}")
-async def deleteMessage(
+async def delete_message(
     request: Request,
     messageId: int,
     db: tuple = Depends(get_db),
@@ -203,18 +275,15 @@ async def deleteMessage(
         cnx.commit()
         return Response(
             content=json.dumps({"message": "Item deleted successfully"}),
+            status_code=200,
             media_type="application/json",
         )
     else:
-        return Response(
-            content=json.dumps({"message": "Item not found"}),
-            status_code=404,
-            media_type="application/json",
-        )
+        return Response(status_code=204)
 
 
 @app.post("/createMessage")
-async def createMessage(
+async def create_message(
     request: Request,
     content: Annotated[str, Form(description="Content")],
     db: tuple = Depends(get_db),

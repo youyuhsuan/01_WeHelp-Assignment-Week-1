@@ -71,7 +71,6 @@
   </body>
   <script>
     let deleteBtns = document.querySelectorAll(".delete_btn");
-    console.log("🚀 ~ deleteBtns:", deleteBtns);
     deleteBtns.forEach((deleteBtn) => {
       deleteBtn.addEventListener("click", async () => {
         let messageId = deleteBtn.getAttribute("data-message-id");

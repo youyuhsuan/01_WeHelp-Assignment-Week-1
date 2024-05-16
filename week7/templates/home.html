@@ -1,0 +1,120 @@
+<html>
+  <head>
+    <title>home</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', path='wehelp.svg') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', path='normalize.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', path='styles.css') }}"
+    />
+  </head>
+  <body>
+    <main>
+      <section>
+        <div class="title">
+          <h1>歡迎光臨，請輸入帳號密碼</h1>
+        </div>
+        <div class="container">
+          <h2 class="subtitle">註冊帳號</h2>
+          <form id="signup_form" action="/signup" method="post">
+            <label for="name"
+              >姓名
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="請輸入您的姓名"
+              />
+            </label>
+            <label for="username"
+              >帳號
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="請輸入您的帳號"
+              />
+            </label>
+            <label for="password"
+              >密碼
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="請輸入您的密碼"
+              />
+            </label>
+            <button type="submit" id="signup_btn">提交</button>
+          </form>
+
+          <hr />
+
+          <h2 class="subtitle">登入系統</h2>
+          <form id="signin_form" action="/signin" method="post">
+            <label for="username"
+              >帳號
+              <input
+                type="text"
+                id="signin_username"
+                name="username"
+                placeholder="請輸入您的帳號"
+            /></label>
+
+            <label for="password"
+              >密碼
+              <input
+                type="password"
+                id="signin_password"
+                name="password"
+                placeholder="請輸入您的密碼"
+              />
+            </label>
+
+            <label for="agree_terms" class="agree_terms">
+              <input
+                type="checkbox"
+                id="agree_terms"
+                name="agree_terms"
+              />同意條款
+            </label>
+
+            <button type="submit" id="signin_btn">提交</button>
+          </form>
+        </div>
+      </section>
+      <hr />
+
+      <section>
+        <div class="container">
+          <h2 class="subtitle">計算正整數的平方</h2>
+          <form id="square_form" method="get">
+            <label for="number"
+              >正整數
+              <input
+                type="number"
+                id="number"
+                name="number"
+                placeholder="請輸入數字"
+              />
+            </label>
+            <button type="submit" role="button" id="square_btn">提交</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', path='js/validate.js') }}"
+    ></script>
+  </body>
+</html>
