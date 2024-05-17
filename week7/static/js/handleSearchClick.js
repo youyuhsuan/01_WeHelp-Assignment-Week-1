@@ -26,7 +26,7 @@ async function handleUpdateClick(event) {
   } else {
     try {
       const content = await updatingName(name);
-      if (content.ok === True) {
+      if (content.ok === true) {
         displayUpdateStatus("Updated successfully", true);
         displayUpdateName(name);
       } else {
