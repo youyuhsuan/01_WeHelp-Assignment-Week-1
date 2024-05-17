@@ -1,9 +1,10 @@
-function displayMemberInfo(data) {
+function displayMemberInfo(content) {
   const searchUsername = document.querySelector(".search_username");
   const memberSpan = searchUsername.querySelector(".member_info");
 
-  if (data) {
-    const { name, username } = data.data;
+  if (content.data !== "no content") {
+    console.log(content.data);
+    const { name, username } = content.data;
     memberSpan.textContent = ` ${name}(${username})`;
   } else {
     memberSpan.textContent = "No Data";

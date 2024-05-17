@@ -27,14 +27,13 @@ def get_db():
     try:
         cnx = mysql.connector.connect(
             user="root",
-            password="dhfdshfjkhsd",
+            password="23322907",
             host="localhost",
             database="website",
         )
         print("Connect success")
         cursor = cnx.cursor(buffered=True)
         yield cnx, cursor
-
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("Something is wrong with your user name or password")
@@ -206,27 +205,27 @@ async def search_username(
     username: str,
     db: tuple = Depends(get_db),
 ):
+    SIGNED_IN = request.session.get("SIGNED_IN")
+    if not SIGNED_IN:
+        return RedirectResponse(url="/", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
     cnx, cursor = db
-    query = "SELECT member.id, member.name ,member.username FROM message JOIN member ON member.id = message.member_id WHERE member.username= %s"
+    query = "SELECT id, name, username FROM member WHERE username = %s"
     cursor.execute(query, (username,))
     matched_member = cursor.fetchone()
-
     if matched_member is not None:
         id, name, username = matched_member
         return Response(
-            content=json.dumps(
-                {"data": {"id": id, "name": name, "username": username}}
-            ),
+            json.dumps({"data": {"id": id, "name": name, "username": username}}),
             status_code=200,
             media_type="application/json",
         )
     else:
-        # return Response(
-        #     content=json.dumps({"data": None}),
-        #     status_code=200,
-        #     media_type="application/json",
-        # )
-        return Response(status_code=204)
+        return Response(
+            json.dumps({"data": "no content"}),
+            status_code=200,
+            media_type="application/json",
+        )
+        # return Response(status_code=204)
 
 
 @app.patch("/api/member", response_model=UpdateName)
@@ -238,25 +237,22 @@ async def update_name(
     cnx, cursor = db
     MEMBER_ID = request.session.get("MEMBER_ID")
     updated_name = update_name.name
-    print(MEMBER_ID, updated_name)
-    print(cursor.rowcount)
     query = "UPDATE member SET name = %s WHERE id = %s"
     cursor.execute(query, (updated_name, MEMBER_ID))
     cnx.commit()
-    print(cursor.rowcount)
     if cursor.rowcount > -1:  # Check if the update was successful
         return Response(
-            content=json.dumps({"ok": True}),
+            json.dumps({"ok": True}),
             status_code=200,
             media_type="application/json",
         )
     else:
-        # return Response(
-        #     content=json.dumps({"error": True}),
-        #     status_code=200,
-        #     media_type="application/json",
-        # )
-        return Response(status_code=204)
+        return Response(
+            json.dumps({"error": True}),
+            status_code=200,
+            media_type="application/json",
+        )
+        # return Response(status_code=204)
 
 
 @app.delete("/deleteMessage/{messageId}")

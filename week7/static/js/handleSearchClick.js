@@ -5,8 +5,8 @@ async function handleSearchClick(event) {
     alert("username cannot be empty");
   } else {
     try {
-      const data = await queryMember(username);
-      displayMemberInfo(data);
+      const content = await queryMember(username);
+      displayMemberInfo(content);
     } catch (error) {
       console.error("Error handling search click:", error);
       alert("Error retrieving member info");
@@ -26,7 +26,12 @@ async function handleUpdateClick(event) {
   } else {
     try {
       const content = await updatingName(name);
-      console.log(content);
+      if (content.ok === True) {
+        displayUpdateStatus("Updated successfully", true);
+        displayUpdateName(name);
+      } else {
+        displayUpdateStatus("Failed to update", false);
+      }
     } catch (error) {
       console.error("Error handling update click:", error);
       alert("Error retrieving update info");

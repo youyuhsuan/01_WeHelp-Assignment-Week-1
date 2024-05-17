@@ -3,23 +3,16 @@ async function queryMember(username) {
     const response = await fetch(`/api/member?username=${username}`, {
       method: "GET",
     });
-    const status_code = response.status;
     if (response.ok) {
-      if (content && status_code === 200) {
-        const content = await response.json();
-        console.log("content:", content);
-        return content;
-      } else {
-        return null;
-      }
+      const content = await response.json();
+      return content;
     } else {
-      console.error("Server Error:", data.error.message);
       throw new Error(
         `Server Error: ${response.status} ${response.statusText}`
       );
     }
   } catch (error) {
-    console.error("Fetch Error:", error.message);
+    console.error("Fetch Error:", error);
     throw error;
   }
 }
@@ -33,17 +26,9 @@ async function updatingName(name) {
       },
       body: JSON.stringify({ name: name }),
     });
-    const status_code = response.status;
     if (response.ok) {
       const content = await response.json();
-      if (content && status_code === 200) {
-        displayUpdateStatus("Updated successfully", true);
-        displayUpdateName(name);
-        return content;
-      } else {
-        displayUpdateStatus("Failed to update", false);
-        return null;
-      }
+      return content;
     } else {
       console.error("Server Error:", content.error);
       throw new Error(
