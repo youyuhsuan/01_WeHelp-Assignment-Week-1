@@ -207,7 +207,10 @@ async def search_username(
 ):
     SIGNED_IN = request.session.get("SIGNED_IN")
     if not SIGNED_IN:
-        return RedirectResponse(url="/", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+        return Response(
+            json.dumps({"data": "null"}),
+            status_code=200,
+        )
     cnx, cursor = db
     query = "SELECT id, name, username FROM member WHERE username = %s"
     cursor.execute(query, (username,))
@@ -217,13 +220,11 @@ async def search_username(
         return Response(
             json.dumps({"data": {"id": id, "name": name, "username": username}}),
             status_code=200,
-            media_type="application/json",
         )
     else:
         return Response(
             json.dumps({"data": "no content"}),
             status_code=200,
-            media_type="application/json",
         )
         # return Response(status_code=204)
 
@@ -240,17 +241,15 @@ async def update_name(
     query = "UPDATE member SET name = %s WHERE id = %s"
     cursor.execute(query, (updated_name, MEMBER_ID))
     cnx.commit()
-    if cursor.rowcount > -1:  # Check if the update was successful
+    if cursor.rowcount > 0:  # Check if the update was successful
         return Response(
             json.dumps({"ok": True}),
             status_code=200,
-            media_type="application/json",
         )
     else:
         return Response(
             json.dumps({"error": True}),
             status_code=200,
-            media_type="application/json",
         )
         # return Response(status_code=204)
 

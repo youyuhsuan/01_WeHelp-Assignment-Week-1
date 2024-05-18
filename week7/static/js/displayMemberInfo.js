@@ -7,7 +7,7 @@ function displayMemberInfo(content) {
     const { name, username } = content.data;
     memberSpan.textContent = ` ${name}(${username})`;
   } else {
-    memberSpan.textContent = "No Data";
+    memberSpan.textContent = content.data;
   }
 }
 
