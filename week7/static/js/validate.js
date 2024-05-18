@@ -56,7 +56,8 @@ const createMessageForm = document.getElementById("create_message_form");
 createMessageForm.addEventListener("submit", function (event) {
   let content = document.getElementById("content").value.trim();
   if (content === "") {
+    event.preventDefault();
     alert("content cannot be empty");
-    event.preventDefault(); // Prevent the form's default behavior
+    // Prevent the form's default behavior
   }
 });
