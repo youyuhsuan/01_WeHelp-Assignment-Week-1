@@ -208,7 +208,7 @@ async def search_username(
     SIGNED_IN = request.session.get("SIGNED_IN")
     if not SIGNED_IN:
         return Response(
-            json.dumps({"data": null}),
+            json.dumps({"data": None}),
             status_code=200,
         )
     cnx, cursor = db
