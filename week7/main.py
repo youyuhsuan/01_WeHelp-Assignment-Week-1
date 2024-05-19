@@ -223,7 +223,7 @@ async def search_username(
         )
     else:
         return Response(
-            json.dumps({"data": "no content"}),
+            json.dumps({"data": None}),
             status_code=200,
         )
         # return Response(status_code=204)

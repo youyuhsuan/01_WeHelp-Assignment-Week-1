@@ -132,4 +132,4 @@ dist
 # pdf
 *.pdf
 
-test/
+application/

@@ -2,12 +2,12 @@ function displayMemberInfo(content) {
   const searchUsername = document.querySelector(".search_username");
   const memberSpan = searchUsername.querySelector(".member_info");
 
-  if (content.data !== "no content") {
+  if (content.data !== null) {
     console.log(content.data);
     const { name, username } = content.data;
     memberSpan.textContent = ` ${name}(${username})`;
   } else {
-    memberSpan.textContent = content.data;
+    memberSpan.textContent = "No Data";
   }
 }
 
